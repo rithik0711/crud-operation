@@ -14,7 +14,8 @@ function App() {
 }, []);
 
   const getAllUsers = () => {
-    axios.get("http://localhost:8000/users")
+    // axios.get("http://localhost:8000/users"),
+    axios.get("https://crud-operation-kj9b.onrender.com/users")
         .then(response => {
             console.log("Fetched Users:", response.data);  // Debugging log
             setUsers(response.data);

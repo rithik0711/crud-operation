@@ -4,7 +4,7 @@ const mysql = require("mysql2");
 const app = express();
 app.use(express.json());
 app.use(cors({
-    origin: ["http://localhost:5173", "http://localhost:5175"],  // ✅ Allow both ports
+    origin: ["http://localhost:5173", "https://crud-operation-web.netlify.app/"],  // ✅ Allow both ports
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     allowedHeaders: ["Content-Type"]
 }));
