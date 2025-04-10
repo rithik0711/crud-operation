@@ -1,3 +1,4 @@
+const API = import.meta.env.VITE_API_URL;
 import { useEffect, useState } from "react";
 import axios from "axios";
 import './App.css';
@@ -15,7 +16,7 @@ function App() {
 
   const getAllUsers = () => {
     // axios.get("http://localhost:8000/users"),
-    axios.get("https://crud-operation-kj9b.onrender.com/users")
+    axios.get(`${API}/users`)
         .then(response => {
             console.log("Fetched Users:", response.data);  // Debugging log
             setUsers(response.data);
@@ -41,7 +42,7 @@ function App() {
     const isConfirmed = window.confirm("Are you sure you want to delete this user?");
     if (isConfirmed) {
       try {
-        await axios.delete(`http://localhost:8000/users/${id}`);
+        await axios.delete(`${API}/users/${id}`);
         getAllUsers();
       } catch (error) {
         console.error("Error deleting user:", error);
@@ -83,10 +84,12 @@ function App() {
     try {
         if (userData.id) {
             console.log(`Updating user with ID: ${userData.id}`);  // ✅ Debug Log
-            await axios.patch(`http://localhost:8000/users/${userData.id}`, userData);
+            await axios.patch(`${API}/users/${userData.id}`, userData);
+
         } else {
             console.log("Inserting new user..."); // ✅ Debug Log
-            await axios.post("http://localhost:8000/users", userData);
+            await axios.post(`${API}/users`, userData);
+
         }
 
         setUserData({ name: "", reg_no: "", dept: "", year: "", mail: "" });
