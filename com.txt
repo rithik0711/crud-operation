@@ -1,0 +1,5 @@
+npm init -y
+npm i express cors
+npm i nodemon -D
+npm create vite@latest client
+npm i axios // to connect api
