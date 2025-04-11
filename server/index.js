@@ -1,13 +1,17 @@
 const express = require("express");
-const cors = require("cors");
+//const cors = require("cors");
 const mysql = require("mysql2");
 const app = express();
+const PORT = 8080;
+const cors = require('cors');
+app.use(cors());
+
 app.use(express.json());
-app.use(cors({
-    origin: ["http://localhost:5173", "https://crud-operation-web.netlify.app/"],  // ✅ Allow both ports
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-    allowedHeaders: ["Content-Type"]
-}));
+// app.use(cors({
+//     origin: ["http://localhost:5173", "https://crud-operation-web.netlify.app/"],  // ✅ Allow both ports
+//     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+//     allowedHeaders: ["Content-Type"]
+// }));
 // ✅ Create MySQL Connection Function (Handles Reconnection)
 const db = mysql.createConnection({
     host: "localhost",
@@ -87,6 +91,6 @@ app.patch("/users/:id", (req, res) => {
 
 
 // ✅ Start Server
-app.listen(8000, () => {
-    console.log("🚀 Server running on port 8000");
+app.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`);
 });
