@@ -1,17 +1,18 @@
 const express = require("express");
-//const cors = require("cors");
+const cors = require("cors");
 const mysql = require("mysql2");
 const app = express();
 const PORT = 8080;
-const cors = require('cors');
-app.use(cors());
-
 app.use(express.json());
+
+app.use(cors({
+    origin: ["http://localhost:5174"],
+    methods: ["GET", "POST", "PATCH", "DELETE"],
+    allowedHeaders: ["Content-Type"]
+  }));
 // app.use(cors({
-//     origin: ["http://localhost:5173", "https://crud-operation-web.netlify.app/"],  // ✅ Allow both ports
-//     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-//     allowedHeaders: ["Content-Type"]
-// }));
+//     origin: 'http://localhost:5174' // adjust as needed
+//   }));
 // ✅ Create MySQL Connection Function (Handles Reconnection)
 const db = mysql.createConnection({
     host: "localhost",
@@ -24,7 +25,7 @@ function connectDB() {
     db.connect(err => {
         if (err) {
             console.error("❌ Database connection failed:", err);
-            setTimeout(connectDB, 5000);  // 🔄 Retry after 5 sec if failed
+            setTimeout(connectDB, 5000);
         } else {
             console.log("✅ Connected to MySQL database");
         }
