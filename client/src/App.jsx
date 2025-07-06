@@ -40,7 +40,7 @@ function App() {
   // Delete user function
   const handleDelete = async (id) => {
     const isConfirmed = window.confirm("Are you sure you want to delete this user?");
-    if (isConfirmed) {
+    if (isConfirmed){
       try {
         await axios.delete(`${API}/users/${id}`);
         getAllUsers();
@@ -56,8 +56,6 @@ function App() {
     setUserData({ ...user, id: user.id }); // Ensure ID is set
     setIsModalOpen(true);
 };
-
-
 
   // Open modal for inserting new user
   const handleInsert = () => {
@@ -101,9 +99,6 @@ function App() {
         alert("Failed to submit data. Check console for errors.");
     }
 };
-
-
-
 
   return (
     <>

@@ -5,15 +5,23 @@ const app = express();
 const PORT = 8080;
 app.use(express.json());
 
-app.use(cors({
-    origin: ["http://localhost:5174"],
-    methods: ["GET", "POST", "PATCH", "DELETE"],
-    allowedHeaders: ["Content-Type"]
-  }));
+// app.use(cors({
+//     origin: ["http://localhost:5173"],
+//     methods: ["GET", "POST", "PATCH", "DELETE"],
+//     allowedHeaders: ["Content-Type"]
+//   }));
+
 // app.use(cors({
 //     origin: 'http://localhost:5174' // adjust as needed
 //   }));
 // ✅ Create MySQL Connection Function (Handles Reconnection)
+
+app.use(cors({
+    origin: ["http://localhost:5173", "http://localhost:5174"],
+    methods: ["GET", "POST", "PATCH", "DELETE"],
+    allowedHeaders: ["Content-Type"]
+}));
+
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
@@ -26,7 +34,8 @@ function connectDB() {
         if (err) {
             console.error("❌ Database connection failed:", err);
             setTimeout(connectDB, 5000);
-        } else {
+        }
+        else {
             console.log("✅ Connected to MySQL database");
         }
     });
@@ -68,7 +77,7 @@ app.get("/users", (req, res) => {
 app.delete("/users/:id", (req, res) => {
   const { id } = req.params;
   db.query("DELETE FROM users WHERE id = ?", [id], (err, result) => {
-      if (err) {
+      if (err){
           console.error("❌ Error deleting user:", err);
           return res.status(500).json({ error: "Failed to delete user" });
       }
@@ -89,7 +98,6 @@ app.patch("/users/:id", (req, res) => {
         res.json({ message: "User updated successfully" });
     });
 });
-
 
 // ✅ Start Server
 app.listen(PORT, () => {
